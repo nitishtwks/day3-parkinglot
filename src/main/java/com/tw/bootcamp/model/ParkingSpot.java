@@ -3,6 +3,10 @@ package com.tw.bootcamp.model;
 public class ParkingSpot {
     private boolean occupied;
 
+    public boolean isEmpty(){
+        return !occupied;
+    }
+
     public boolean parkVehicle(){
         if(occupied){
             throw new IllegalStateException("Parking spot is not empty");
