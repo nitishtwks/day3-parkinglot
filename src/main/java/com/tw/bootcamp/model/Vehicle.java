@@ -1,9 +1,9 @@
 package com.tw.bootcamp.model;
 
-public class Car {
+public class Vehicle {
     private final String regNo;
 
-    public Car(String regNo) {
+    public Vehicle(String regNo) {
         this.regNo = regNo;
     }
 }

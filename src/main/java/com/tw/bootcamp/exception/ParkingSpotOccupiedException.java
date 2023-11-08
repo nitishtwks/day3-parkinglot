@@ -1,7 +1,7 @@
 package com.tw.bootcamp.exception;
 
-public class ParkingLotFullException extends Exception {
-    public ParkingLotFullException(String message) {
+public class ParkingSpotOccupiedException extends RuntimeException {
+    public ParkingSpotOccupiedException(String message) {
         super(message);
     }
 }

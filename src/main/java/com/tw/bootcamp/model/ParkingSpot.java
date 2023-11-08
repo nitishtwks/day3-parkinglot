@@ -1,32 +1,35 @@
 package com.tw.bootcamp.model;
 
+import com.tw.bootcamp.exception.ParkingSpotEmptyException;
+import com.tw.bootcamp.exception.ParkingSpotOccupiedException;
+
 public class ParkingSpot {
     private boolean occupied;
 
-    private Car parkedCar;
+    private Vehicle parkedVehicle;
 
     public boolean isEmpty(){
         return !occupied;
     }
 
-    public Car getParkedCar(){
-        return parkedCar;
+    public Vehicle getParkedCar(){
+        return parkedVehicle;
     }
 
-    public boolean parkVehicle(Car car){
+    public boolean parkVehicle(Vehicle vehicle) throws ParkingSpotOccupiedException {
         if(occupied){
-            throw new IllegalStateException("Parking spot is not empty");
+            throw new ParkingSpotOccupiedException("Parking spot is not empty");
         }
         occupied = true;
-        this.parkedCar = car;
+        this.parkedVehicle = vehicle;
         return true;
     }
-    public boolean unparkVehicle(){
+    public boolean unparkVehicle() throws ParkingSpotEmptyException {
         if(!occupied){
-            throw new IllegalStateException("Parking spot is empty");
+            throw new ParkingSpotEmptyException("Parking spot is empty");
         }
         occupied = false;
-        this.parkedCar = null;
+        this.parkedVehicle = null;
         return true;
     }
 }

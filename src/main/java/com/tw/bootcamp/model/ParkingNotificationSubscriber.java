@@ -1,2 +1,5 @@
-package com.tw.bootcamp.model;public interface ParkingNotificationSubscriber {
+package com.tw.bootcamp.model;
+
+public interface ParkingNotificationSubscriber {
+    void notify(String message);
 }
