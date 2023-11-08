@@ -26,7 +26,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void shouldParkMultipleVehiclesCapacityFull(){
+    void shouldNotParkVehicleWhenCapacityFull(){
         ParkingLot parkingLot = new ParkingLot(1);
         Car car1 = new Car("001");
         Car car2 = new Car("002");
