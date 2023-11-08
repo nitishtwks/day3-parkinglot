@@ -9,6 +9,10 @@ public class ParkingSpot {
         return !occupied;
     }
 
+    public Car getParkedCar(){
+        return parkedCar;
+    }
+
     public boolean parkVehicle(Car car){
         if(occupied){
             throw new IllegalStateException("Parking spot is not empty");

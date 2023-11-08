@@ -5,9 +5,9 @@ import java.util.List;
 
 public class ParkingLot {
 
-    private int capacity;
+    private final int capacity;
 
-    private List<ParkingSpot> parkingSpotList;
+    private final List<ParkingSpot> parkingSpotList;
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
