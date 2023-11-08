@@ -1,10 +1,13 @@
 package com.tw.bootcamp.model;
 
-import java.util.List;
-
 public class ParkingLot {
 
-    public ParkingSpot getEmptyParkingSpot() {
+    public boolean parkVehicle(){
+        ParkingSpot spot = getEmptyParkingSpot();
+        return spot.parkVehicle();
+    }
+
+    private ParkingSpot getEmptyParkingSpot() {
         return new ParkingSpot();
     }
 }
