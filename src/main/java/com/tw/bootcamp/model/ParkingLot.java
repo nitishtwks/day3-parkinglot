@@ -1,13 +1,30 @@
 package com.tw.bootcamp.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParkingLot {
 
-    public boolean parkVehicle(){
+    private int capacity;
+
+    private List<ParkingSpot> parkingSpotList;
+
+    public ParkingLot(int capacity) {
+        this.capacity = capacity;
+        this.parkingSpotList = new ArrayList<>();
+    }
+
+    public boolean parkVehicle(Car car){
         ParkingSpot spot = getEmptyParkingSpot();
-        return spot.parkVehicle();
+        return spot.parkVehicle(car);
     }
 
     private ParkingSpot getEmptyParkingSpot() {
-        return new ParkingSpot();
+        if(parkingSpotList.size()==capacity){
+            throw new IllegalStateException("No empty slot available");
+        }
+        ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpotList.add(parkingSpot);
+        return parkingSpot;
     }
 }
