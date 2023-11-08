@@ -5,7 +5,7 @@ public class ParkingSpot {
 
     public boolean parkVehicle(){
         if(occupied){
-            return false;
+            throw new IllegalStateException("Parking spot is not empty");
         }
         occupied = true;
         return true;
@@ -13,7 +13,7 @@ public class ParkingSpot {
 
     public boolean removeVehicle(){
         if(!occupied){
-            throw new IllegalStateException();
+            return false;
         }
         occupied = false;
         return true;

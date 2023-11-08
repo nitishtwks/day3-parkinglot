@@ -4,8 +4,7 @@ import com.tw.bootcamp.model.ParkingLot;
 import com.tw.bootcamp.model.ParkingSpot;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingLotTest {
 
@@ -14,6 +13,14 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot();
         ParkingSpot spot = parkingLot.getEmptyParkingSpot();
         assertTrue(spot.parkVehicle());
+    }
+
+    @Test
+    void shouldThrowExeptionIfVehicleParkedInOccupiedSpot(){
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingSpot spot = parkingLot.getEmptyParkingSpot();
+        spot.parkVehicle();
+        assertThrows(IllegalStateException.class, () -> spot.parkVehicle());
     }
 
     @Test
@@ -28,6 +35,6 @@ public class ParkingLotTest {
     void shouldRemoveVehicleWhenEmpty(){
         ParkingLot parkingLot = new ParkingLot();
         ParkingSpot spot = parkingLot.getEmptyParkingSpot();
-        assertThrows(IllegalStateException.class, () -> spot.removeVehicle());
+        assertFalse(spot.removeVehicle());
     }
 }
