@@ -50,6 +50,7 @@ public class ParkingLotTest {
     void shouldNotifyWhenCapacityFull() throws ParkingLotFullException {
         ActorOwner actorOwner = new ActorOwner();
         ActorTrafficCop actorTrafficCop = new ActorTrafficCop();
+
         ParkingLot parkingLot = new ParkingLot(1);
         parkingLot.addSubscriberForNotifications(actorOwner);
         parkingLot.addSubscriberForNotifications(actorTrafficCop);
