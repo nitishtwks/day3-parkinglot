@@ -27,4 +27,9 @@ public class ParkingLot {
         parkingSpotList.add(parkingSpot);
         return parkingSpot;
     }
+
+    public boolean unparkVehicle(Car car) {
+        ParkingSpot parkingSpot = parkingSpotList.stream().filter(s->s.getParkedCar().equals(car)).findFirst().get();
+        parkingSpot.unparkVehicle();
+    }
 }

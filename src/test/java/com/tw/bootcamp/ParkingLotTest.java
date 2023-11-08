@@ -34,4 +34,13 @@ public class ParkingLotTest {
         assertThrows(IllegalStateException.class, () -> parkingLot.parkVehicle(car2));
     }
 
+    @Test
+    void shouldUnparkVehicle() {
+        ParkingLot parkingLot = new ParkingLot(10);
+        Car car1 = new Car("001");
+        parkingLot.parkVehicle(car1);
+        assertTrue(parkingLot.unparkVehicle(car1));
+
+    }
+
 }

@@ -21,4 +21,12 @@ public class ParkingSpot {
         this.parkedCar = car;
         return true;
     }
+    public boolean unparkVehicle(){
+        if(!occupied){
+            throw new IllegalStateException("Parking spot is empty");
+        }
+        occupied = false;
+        this.parkedCar = null;
+        return true;
+    }
 }
