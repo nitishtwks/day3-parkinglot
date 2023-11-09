@@ -42,14 +42,8 @@ public class ParkingLot {
     }
 
     public boolean unparkVehicle(Vehicle vehicle) throws VehicleNotFoundException {
-        Optional<ParkingSpot> optParkingSpot = parkingSpotList.stream()
-                .filter(s -> !s.isEmpty())
-                .filter(s -> s.getParkedCar().equals(vehicle))
-                .findFirst();
-        if (optParkingSpot.isEmpty()) {
-            throw new VehicleNotFoundException("Car could not be located in the Parking spots");
-        }
-        boolean isUnParked = optParkingSpot.get().unparkVehicle();
+        ParkingSpot parkingSpot = getVehicleParkingSpotFromParkingLot(vehicle);
+        boolean isUnParked = parkingSpot.unparkVehicle();
         if (getCountOfParkedCars() == capacity-1 && isUnParked) {
             notifySubscribers("Parking lot is Available again");
         }
@@ -66,5 +60,29 @@ public class ParkingLot {
 
     private long getCountOfParkedCars() {
         return parkingSpotList.stream().filter(s->!s.isEmpty()).count();
+    }
+
+    public boolean areEmptySpotsAvailable(){
+        return getCountOfParkedCars()!=capacity;
+    }
+
+    private ParkingSpot getVehicleParkingSpotFromParkingLot(Vehicle vehicle) throws VehicleNotFoundException {
+        Optional<ParkingSpot> optParkingSpot = parkingSpotList.stream()
+                .filter(s -> !s.isEmpty())
+                .filter(s -> s.getParkedCar().equals(vehicle))
+                .findFirst();
+        if (optParkingSpot.isEmpty()) {
+            throw new VehicleNotFoundException("Car could not be located in the Parking spots");
+        }
+        return optParkingSpot.get();
+    }
+
+    public boolean isVehiclePresentInParkingLot(Vehicle vehicle){
+        try {
+            getVehicleParkingSpotFromParkingLot(vehicle);
+            return true;
+        } catch (VehicleNotFoundException e) {
+            return false;
+        }
     }
 }
