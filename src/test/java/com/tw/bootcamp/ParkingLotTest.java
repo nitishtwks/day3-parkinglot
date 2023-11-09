@@ -60,4 +60,21 @@ public class ParkingLotTest {
         parkingLot.parkVehicle(vehicle1);
         assertThrows(ParkingLotFullException.class, () -> parkingLot.parkVehicle(vehicle2));
     }
+
+    @Test
+    void shouldNotifyWhenParkingSlotAvailableAgain() throws ParkingLotFullException, VehicleNotFoundException {
+        ActorOwner actorOwner = new ActorOwner();
+        ActorTrafficCop actorTrafficCop = new ActorTrafficCop();
+
+        ParkingLot parkingLot = new ParkingLot(1);
+        parkingLot.addSubscriberForNotifications(actorOwner);
+        parkingLot.addSubscriberForNotifications(actorTrafficCop);
+
+        Vehicle vehicle1 = new Vehicle("001");
+        Vehicle vehicle2 = new Vehicle("002");
+        parkingLot.parkVehicle(vehicle1);
+        assertThrows(ParkingLotFullException.class, () -> parkingLot.parkVehicle(vehicle2));
+        parkingLot.unparkVehicle(vehicle1);
+        parkingLot.parkVehicle(vehicle2);
+    }
 }

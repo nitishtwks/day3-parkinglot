@@ -26,13 +26,16 @@ public class ParkingLot {
 
     public boolean parkVehicle(Vehicle vehicle) throws ParkingLotFullException {
         ParkingSpot spot = getEmptyParkingSpot();
-        return spot.parkVehicle(vehicle);
+        boolean isParked = spot.parkVehicle(vehicle);
+        if (getCountOfParkedCars() == capacity && isParked) {
+            notifySubscribers("Parking lot is Full");
+        }
+        return isParked;
     }
 
     private ParkingSpot getEmptyParkingSpot() throws ParkingLotFullException {
         Optional<ParkingSpot> optParkingSpot = parkingSpotList.stream().filter(s->s.isEmpty()).findFirst();
         if(optParkingSpot.isEmpty()){
-            notifySubscribers("Parking lot is Full");
             throw new ParkingLotFullException("No empty slot available. Parking lot is Full");
         }
         return optParkingSpot.get();
@@ -43,10 +46,14 @@ public class ParkingLot {
                 .filter(s -> !s.isEmpty())
                 .filter(s -> s.getParkedCar().equals(vehicle))
                 .findFirst();
-        if(optParkingSpot.isEmpty()){
+        if (optParkingSpot.isEmpty()) {
             throw new VehicleNotFoundException("Car could not be located in the Parking spots");
         }
-        return optParkingSpot.get().unparkVehicle();
+        boolean isUnParked = optParkingSpot.get().unparkVehicle();
+        if (getCountOfParkedCars() == capacity-1 && isUnParked) {
+            notifySubscribers("Parking lot is Available again");
+        }
+        return isUnParked;
     }
 
     public void addSubscriberForNotifications(ParkingNotificationSubscriber subscriber) {
@@ -55,5 +62,9 @@ public class ParkingLot {
 
     private void notifySubscribers(String message){
         subscribers.stream().forEach(s -> s.notify(message));
+    }
+
+    private long getCountOfParkedCars() {
+        return parkingSpotList.stream().filter(s->!s.isEmpty()).count();
     }
 }
