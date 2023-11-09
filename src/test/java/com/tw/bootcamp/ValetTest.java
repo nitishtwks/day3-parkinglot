@@ -34,6 +34,7 @@ public class ValetTest {
         Vehicle vehicle1 = new Vehicle("001");
         Vehicle vehicle2 = new Vehicle("002");
         Valet valet = new Valet(parkingLotList);
+        parkingLot.addSubscriberForNotifications(valet);
         valet.parkVehicle(vehicle1);
         assertThrows(AllParkingLotsFullException.class, () -> valet.parkVehicle(vehicle2));
     }

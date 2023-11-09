@@ -28,7 +28,7 @@ public class ParkingLot {
         ParkingSpot spot = getEmptyParkingSpot();
         boolean isParked = spot.parkVehicle(vehicle);
         if (getCountOfParkedCars() == capacity && isParked) {
-            notifySubscribers("Parking lot is Full");
+            notifySubscribers(ParkingNotificationSubscriber.NOTFN_PARKING_LOT_FULL);
         }
         return isParked;
     }
@@ -45,7 +45,7 @@ public class ParkingLot {
         ParkingSpot parkingSpot = getVehicleParkingSpotFromParkingLot(vehicle);
         boolean isUnParked = parkingSpot.unparkVehicle();
         if (getCountOfParkedCars() == capacity-1 && isUnParked) {
-            notifySubscribers("Parking lot is Available again");
+            notifySubscribers(ParkingNotificationSubscriber.NOTFN_PARKING_AVAILABLE);
         }
         return isUnParked;
     }
@@ -55,15 +55,11 @@ public class ParkingLot {
     }
 
     private void notifySubscribers(String message){
-        subscribers.stream().forEach(s -> s.notify(message));
+        subscribers.stream().forEach(s -> s.notify(this, message));
     }
 
     private long getCountOfParkedCars() {
         return parkingSpotList.stream().filter(s->!s.isEmpty()).count();
-    }
-
-    public boolean areEmptySpotsAvailable(){
-        return getCountOfParkedCars()!=capacity;
     }
 
     private ParkingSpot getVehicleParkingSpotFromParkingLot(Vehicle vehicle) throws VehicleNotFoundException {
